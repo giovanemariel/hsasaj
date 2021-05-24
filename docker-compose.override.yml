@@ -7,3 +7,10 @@ services:
     command: npm run dev
     volumes:
       - ./apps/api:/usr/app
+
+  adminer:
+    container_name: adminer
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
