@@ -1,0 +1,22 @@
+# import Operator from "./operator.graphql"
+# import Authorization from "./authorization.graphql"
+
+scalar Date
+
+type Patient {
+  id: ID!
+  name: String!
+  dateBirth: Date!
+  operator: Operator!
+  authorizations: [Authorization!]
+}
+
+# Query
+type Query {
+  patients: [Patient!]!
+}
+
+# Mutation
+type Mutation {
+  createPatient(name: String!, dateBirth: Date!, operatorId: ID!): Patient!
+}

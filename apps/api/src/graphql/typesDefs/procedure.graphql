@@ -1,0 +1,26 @@
+type Procedure {
+  id: ID!
+  code: String!
+  description: String!
+  port: String!
+  operationalCost: String!
+  anestheticPort: String!
+  auxiliaryNumber: String!
+}
+
+# Query
+type Query {
+  procedures: [Procedure!]!
+}
+
+# Mutation
+type Mutation {
+  createProcedure(
+    code: String!
+    description: String!
+    port: String!
+    operationalCost: String!
+    anestheticPort: String!
+    auxiliaryNumber: String!
+  ): Procedure!
+}

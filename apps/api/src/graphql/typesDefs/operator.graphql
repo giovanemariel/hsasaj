@@ -1,0 +1,17 @@
+# import Patient from "./patient.graphql"
+
+type Operator {
+  id: ID!
+  name: String!
+  patients: [Patient]
+}
+
+# Query
+type Query {
+  operators: [Operator!]!
+}
+
+# Mutation
+type Mutation {
+  createOperator(name: String!): Operator!
+}

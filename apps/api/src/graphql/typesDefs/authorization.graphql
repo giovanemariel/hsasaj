@@ -1,0 +1,143 @@
+# import Patient from "./patient.graphql"
+# import Doctor from "./doctor.graphql"
+# import Procedure from "./procedure.graphql"
+# import Provider from "./provider.graphql"
+# import User from "./user.graphql"
+
+scalar Date
+
+# Enum
+enum Accommodation {
+  APARTAMENTO
+  ENFERMARIA
+}
+
+enum Cost {
+  DIRETO
+  CONTA
+}
+
+enum Reason {
+  HOSPITAL
+  MEDICO
+  OPERADORA
+  PACIENTE
+}
+
+enum Status {
+  AGUARDANDO
+  AUTORIZADO
+  NEGADO
+  CANCELADO
+}
+
+# Input
+input PatientInput {
+  id: ID
+  name: String!
+  dateBirth: Date!
+  operatorId: ID!
+}
+
+input InternmentInput {
+  id: ID
+  dateExecution: Date!
+  dateOutput: Date!
+  guideNumber: String!
+  reason: Reason
+  userId: ID!
+}
+
+# Type
+type Internment {
+  id: ID!
+  dateExecution: Date!
+  dateOutput: Date!
+  guideNumber: String!
+  reason: Reason
+  authorizations: [Authorization]
+  user: User!
+}
+
+type Authorization {
+  id: ID!
+  accommodation: Accommodation!
+  cost: Cost
+  dateAuthorization: Date
+  dateSolicitation: Date!
+  doctor: Doctor!
+  patient: Patient!
+  procedure: Procedure!
+  opme: Boolean!
+  provider: Provider
+  reason: Reason
+  note: String
+  status: Status
+  user: User!
+  internment: Internment
+  created_at: Date
+  updated_at: Date
+}
+
+# Query
+type Query {
+  authorizations: [Authorization!]!
+}
+
+# Mutation
+type Mutation {
+  createAuthorization(
+    dateSolicitation: Date!
+    dateAuthorization: Date
+    patient: PatientInput!
+    doctorId: ID!
+    procedureId: ID!
+    opme: Boolean!
+    cost: Cost
+    providerId: ID
+    reason: Reason
+    accommodation: Accommodation!
+    note: String
+    status: Status
+    userId: ID!
+  ): Authorization!
+
+  createAuthorizationInternment(
+    id: ID!
+    internment: InternmentInput!
+  ): Authorization
+
+  deleteAuthorization(id: ID!): Authorization!
+
+  updateAuthorization(
+    id: ID!
+    dateSolicitation: Date
+    dateAuthorization: Date
+    doctorId: ID
+    procedureId: ID
+    opme: Boolean
+    cost: Cost
+    providerId: ID
+    reason: Reason
+    accommodation: Accommodation
+    note: String
+    status: Status
+    userId: ID!
+  ): Authorization!
+
+  updateAuthorizationPatient(
+    id: ID
+    dateSolicitation: Date
+    dateAuthorization: Date
+    doctorId: ID
+    procedureId: ID
+    opme: Boolean
+    cost: Cost
+    providerId: ID
+    reason: Reason
+    accommodation: Accommodation
+    note: String
+    status: Status
+    userId: ID!
+  ): Patient!
+}

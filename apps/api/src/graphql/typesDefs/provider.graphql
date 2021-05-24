@@ -1,0 +1,14 @@
+type Provider {
+  id: ID!
+  name: String!
+}
+
+# Query
+type Query {
+  providers: [Provider!]!
+}
+
+# Mutation
+type Mutation {
+  createProvider(name: String!): Provider!
+}

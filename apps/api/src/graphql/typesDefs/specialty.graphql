@@ -1,0 +1,17 @@
+# import Doctor from "./doctor.graphql"
+
+type Specialty {
+  id: ID!
+  name: String!
+  doctors: [Doctor]
+}
+
+# Query
+type Query {
+  specialties: [Specialty!]!
+}
+
+# Mutation
+type Mutation {
+  createSpecialty(name: String!): Specialty
+}

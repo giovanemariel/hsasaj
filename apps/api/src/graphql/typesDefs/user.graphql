@@ -1,0 +1,50 @@
+# Enum
+enum Department {
+  ADMINISTRATIVO
+  FATURAMENTO
+  AUTORIZACAO
+  AUDITORIA
+  RECEPCAO
+  MEDICO
+  ALMOXARIFADO
+  ENFERMAGEM
+  TI
+}
+
+enum Profile {
+  ADMIN
+  USER
+}
+
+# Types
+type AuthPayload {
+  token: String!
+  user: User!
+}
+
+type User {
+  id: ID!
+  name: String!
+  department: Department!
+  email: String!
+  password: String!
+  profile: Profile!
+}
+
+# Query
+type Query {
+  users: [User!]!
+}
+
+# Mutation
+type Mutation {
+  login(email: String!, password: String!): AuthPayload
+
+  signup(
+    email: String!
+    password: String!
+    name: String!
+    department: Department!
+    profile: Profile!
+  ): AuthPayload
+}

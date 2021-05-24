@@ -1,0 +1,19 @@
+# import Specialty from "./specialty.graphql"
+
+# Types
+type Doctor {
+  id: ID!
+  name: String!
+  council: String!
+  cpf: String!
+}
+
+# Query
+type Query {
+  doctors: [Doctor!]!
+}
+
+# Mutation
+type Mutation {
+  createDoctor(name: String!, council: String!, cpf: String!): Doctor!
+}

@@ -4,7 +4,7 @@
   "description": "",
   "main": ".eslintrc.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "nodemon src/index.js"
   },
   "keywords": [],
   "author": "",
@@ -15,5 +15,10 @@
     "eslint-plugin-prettier": "^3.4.0",
     "nodemon": "^2.0.7",
     "prettier": "^2.3.0"
-  }
+  },
+  "dependencies": {
+    "graphql-tools": "^7.0.5",
+    "graphql-yoga": "^1.18.3"
+  },
+  "type": "module"
 }
