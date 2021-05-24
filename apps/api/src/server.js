@@ -19,12 +19,6 @@ const DOCTORS = [
 ]
 
 const resolvers = {
-  Doctor: {
-    name: (parent) => {
-      console.log('PARENT ', parent)
-      return 'Dr. ' + parent.name
-    },
-  },
   Query: {
     doctors: () => DOCTORS,
   },

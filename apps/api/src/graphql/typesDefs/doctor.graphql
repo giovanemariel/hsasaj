@@ -5,6 +5,7 @@ type Doctor {
   id: ID!
   name: String!
   council: String!
+  specialty: Specialty!
   cpf: String!
 }
 
@@ -15,5 +16,10 @@ type Query {
 
 # Mutation
 type Mutation {
-  createDoctor(name: String!, council: String!, cpf: String!): Doctor!
+  createDoctor(
+    name: String!
+    council: String!
+    specialtyId: ID!
+    cpf: String!
+  ): Doctor!
 }
