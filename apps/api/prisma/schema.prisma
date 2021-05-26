@@ -1,0 +1,149 @@
+// This is your Prisma schema file,
+// learn more about it in the docs https//pris.ly/d/prisma-schema
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+enum Profile {
+  ADMIN
+  USER
+}
+
+enum Reason {
+  HOSPITAL
+  MEDICO
+  OPERADORA
+  PACIENTE
+}
+
+enum Accommodation {
+  APARTAMENTO
+  ENFERMARIA
+}
+
+enum Department {
+  ADMINISTRATIVO
+  FATURAMENTO
+  AUTORIZACAO
+  AUDITORIA
+  RECEPCAO
+  MEDICO
+  ALMOXARIFADO
+  ENFERMAGEM
+  TI
+}
+
+enum Cost {
+  DIRETO
+  CONTA
+}
+
+enum Status {
+  AGUARDANDO
+  AUTORIZADO
+  NEGADO
+  CANCELADO
+}
+
+model User {
+  id            String         @id @default(cuid())
+  name          String
+  department    Department
+  email         String         @unique
+  password      String
+  profile       Profile
+  authorization Authorization?
+  internment    Internment?
+}
+
+model Doctor {
+  id            String         @id @default(cuid())
+  name          String
+  council       String         @unique
+  specialties   Specialty[]
+  cpf           String
+  authorization Authorization?
+}
+
+model Specialty {
+  id      String   @id @default(cuid())
+  name    String   @unique
+  doctors Doctor[]
+}
+
+model Provider {
+  id            String         @id @default(cuid())
+  name          String
+  authorization Authorization?
+}
+
+model Operator {
+  id       String    @id @default(cuid())
+  name     String    @unique
+  patients Patient[]
+}
+
+model Patient {
+  id             String          @id @default(cuid())
+  name           String
+  dateBirth      DateTime
+  operator       Operator        @relation(fields: [operatorId], references: [id])
+  operatorId     String
+  authorizations Authorization[]
+}
+
+model Procedure {
+  id              String         @id @default(cuid())
+  code            String         @unique
+  description     String
+  port            String
+  operationalCost String
+  anestheticPort  String
+  auxiliaryNumber String
+  authorization   Authorization?
+}
+
+model Authorization {
+  id                String        @id @default(cuid())
+  dateSolicitation  DateTime
+  dateAuthorization DateTime?
+  patient           Patient       @relation(fields: [patientId], references: [id])
+  patientId         String
+  doctor            Doctor        @relation(fields: [doctorId], references: [id])
+  doctorId          String
+  procedure         Procedure     @relation(fields: [procedureId], references: [id])
+  procedureId       String
+  opme              Boolean       @default(false)
+  cost              Cost?
+  provider          Provider?     @relation(fields: [providerId], references: [id])
+  providerId        String?
+  reason            Reason?
+  accommodation     Accommodation
+  note              String?
+  status            Status?       @default(AGUARDANDO)
+  user              User          @relation(fields: [userId], references: [id])
+  userId            String
+  internment        Internment?   @relation(fields: [internmentId], references: [id])
+  internmentId      String?
+  created_at        DateTime      @default(now())
+  updated_at        DateTime      @updatedAt
+}
+
+model Internment {
+  id             String          @id @default(cuid())
+  dateExecution  DateTime
+  dateOutput     DateTime
+  guideNumber    String          @unique
+  reason         Reason?
+  authorizations Authorization[]
+  user           User            @relation(fields: [userId], references: [id])
+  userId         String
+  created_at     DateTime        @default(now())
+  updated_at     DateTime        @updatedAt
+}
