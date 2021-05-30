@@ -21,6 +21,5 @@
     "@prisma/client": "^2.23.0",
     "graphql-tools": "^7.0.5",
     "graphql-yoga": "^1.18.3"
-  },
-  "type": "module"
+  }
 }

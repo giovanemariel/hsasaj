@@ -33,7 +33,7 @@ type User {
 
 # Query
 type Query {
-  users: [User!]!
+  user: [User!]!
 }
 
 # Mutation

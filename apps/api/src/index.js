@@ -1,4 +1,4 @@
-import server from './server.js'
+const server = require('./server.js')
 
 const { PORT: port = 4000 } = process.env
 

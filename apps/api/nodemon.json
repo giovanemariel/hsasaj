@@ -2,5 +2,5 @@
   "watch": [
     "src"
   ],
-  "ext" : "js,graphql"
+  "ext" : "js,graphql,prisma"
 }

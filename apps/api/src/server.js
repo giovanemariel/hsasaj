@@ -1,38 +1,17 @@
-import { GraphQLServer } from 'graphql-yoga'
-import {
+const { GraphQLServer } = require('graphql-yoga')
+const {
   loadSchemaSync,
   GraphQLFileLoader,
   addResolversToSchema,
-} from 'graphql-tools'
+} = require('graphql-tools')
+const { PrismaClient } = require('@prisma/client')
+const resolvers = require('./graphql/resolvers')
+
+const prisma = new PrismaClient()
 
 const schema = loadSchemaSync('./**/*.graphql', {
   loaders: [new GraphQLFileLoader()],
 })
-
-const DOCTORS = [
-  {
-    id: 1,
-    name: 'Giovane Mariel',
-    council: '11233434BR',
-    cpf: '0129287877',
-  },
-]
-
-const resolvers = {
-  Query: {
-    doctors: () => DOCTORS,
-  },
-  Mutation: {
-    createDoctor: (_, args) => {
-      const doctor = {
-        ...args,
-        id: DOCTORS.length + 1,
-      }
-      DOCTORS.push(doctor)
-      return doctor
-    },
-  },
-}
 
 const schemaWithResolvers = addResolversToSchema({
   schema,
@@ -41,6 +20,10 @@ const schemaWithResolvers = addResolversToSchema({
 
 const server = new GraphQLServer({
   schema: schemaWithResolvers,
+  context: (request) => ({
+    ...request,
+    db: prisma,
+  }),
 })
 
-export default server
+module.exports = server
