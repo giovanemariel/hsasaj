@@ -11,7 +11,7 @@ enum Department {
   TI
 }
 
-enum Profile {
+enum Role {
   ADMIN
   USER
 }
@@ -28,7 +28,7 @@ type User {
   department: Department!
   email: String!
   password: String!
-  profile: Profile!
+  role: Role!
 }
 
 # Query
@@ -38,13 +38,13 @@ type Query {
 
 # Mutation
 type Mutation {
-  login(email: String!, password: String!): AuthPayload
+  signin(email: String!, password: String!): AuthPayload
 
   signup(
     email: String!
     password: String!
     name: String!
     department: Department!
-    profile: Profile!
+    role: Role!
   ): AuthPayload
 }

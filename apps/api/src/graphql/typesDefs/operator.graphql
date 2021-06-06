@@ -3,12 +3,12 @@
 type Operator {
   id: ID!
   name: String!
-  patients: [Patient]
+  patient: Patient
 }
 
 # Query
 type Query {
-  operators: [Operator!]!
+  operator: [Operator!]!
 }
 
 # Mutation

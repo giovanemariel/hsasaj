@@ -2,16 +2,16 @@
 // learn more about it in the docs https//pris.ly/d/prisma-schema
 
 datasource db {
-  provider      = "mysql"
-  url           = env("DATABASE_URL")
-  binaryTargets = ["native", "darwin", "debian-openssl-1.1.x"]
+  provider = "mysql"
+  url      = env("DATABASE_URL")
 }
 
 generator client {
-  provider = "prisma-client-js"
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "linux-musl"]
 }
 
-enum Profile {
+enum Role {
   ADMIN
   USER
 }
@@ -53,23 +53,21 @@ enum Status {
 }
 
 model User {
-  id            String         @id @default(cuid())
-  name          String
-  department    Department
-  email         String         @unique
-  password      String
-  profile       Profile
-  authorization Authorization?
-  internment    Internment?
+  id         String     @id @default(cuid())
+  name       String
+  department Department
+  email      String     @unique
+  password   String
+  role       Role
 }
 
 model Doctor {
-  id            String         @id @default(cuid())
-  name          String
-  council       String         @unique
-  specialties   Specialty[]
-  cpf           String
-  authorization Authorization?
+  id             String          @id @default(cuid())
+  name           String
+  council        String          @unique
+  specialties    Specialty[]
+  cpf            String
+  authorizations Authorization[]
 }
 
 model Specialty {
@@ -79,9 +77,9 @@ model Specialty {
 }
 
 model Provider {
-  id            String         @id @default(cuid())
-  name          String
-  authorization Authorization?
+  id             String          @id @default(cuid())
+  name           String
+  authorizations Authorization[]
 }
 
 model Operator {
@@ -93,27 +91,27 @@ model Operator {
 model Patient {
   id             String          @id @default(cuid())
   name           String
-  dateBirth      DateTime
+  dateBirth      DateTime        @db.Date
   operator       Operator        @relation(fields: [operatorId], references: [id])
   operatorId     String
   authorizations Authorization[]
 }
 
 model Procedure {
-  id              String         @id @default(cuid())
-  code            String         @unique
+  id              String          @id @default(cuid())
+  code            String          @unique
   description     String
   port            String
   operationalCost String
   anestheticPort  String
   auxiliaryNumber String
-  authorization   Authorization?
+  authorizations  Authorization[]
 }
 
 model Authorization {
   id                String        @id @default(cuid())
-  dateSolicitation  DateTime
-  dateAuthorization DateTime?
+  dateSolicitation  DateTime      @db.Date
+  dateAuthorization DateTime?     @db.Date
   patient           Patient       @relation(fields: [patientId], references: [id])
   patientId         String
   doctor            Doctor        @relation(fields: [doctorId], references: [id])
@@ -128,8 +126,6 @@ model Authorization {
   accommodation     Accommodation
   note              String?
   status            Status?       @default(AGUARDANDO)
-  user              User          @relation(fields: [userId], references: [id])
-  userId            String
   internment        Internment?   @relation(fields: [internmentId], references: [id])
   internmentId      String?
   created_at        DateTime      @default(now())
@@ -137,14 +133,12 @@ model Authorization {
 }
 
 model Internment {
-  id             String          @id @default(cuid())
-  dateExecution  DateTime
-  dateOutput     DateTime
-  guideNumber    String          @unique
-  reason         Reason?
-  authorizations Authorization[]
-  user           User            @relation(fields: [userId], references: [id])
-  userId         String
-  created_at     DateTime        @default(now())
-  updated_at     DateTime        @updatedAt
+  id            String         @id @default(cuid())
+  dateExecution DateTime       @db.Date
+  dateOutput    DateTime       @db.Date
+  guideNumber   String         @unique
+  reason        Reason?
+  authorization Authorization?
+  created_at    DateTime       @default(now())
+  updated_at    DateTime       @updatedAt
 }

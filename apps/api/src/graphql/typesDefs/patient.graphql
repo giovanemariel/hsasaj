@@ -3,6 +3,68 @@
 
 scalar Date
 
+# Enum
+enum Accommodation {
+  APARTAMENTO
+  ENFERMARIA
+}
+
+enum Cost {
+  DIRETO
+  CONTA
+}
+
+enum Reason {
+  HOSPITAL
+  MEDICO
+  OPERADORA
+  PACIENTE
+}
+
+enum Status {
+  AGUARDANDO
+  AUTORIZADO
+  NEGADO
+  CANCELADO
+}
+
+# Input
+input AuthorizationInputCreate {
+  dateSolicitation: Date!
+  dateAuthorization: Date
+  doctorId: ID!
+  procedureId: ID!
+  opme: Boolean!
+  cost: Cost
+  providerId: ID
+  reason: Reason
+  accommodation: Accommodation!
+  note: String
+  status: Status
+  internmentId: ID
+  created_at: Date
+  updated_at: Date
+}
+
+input AuthorizationInputUpdate {
+  id: ID
+  dateSolicitation: Date
+  dateAuthorization: Date
+  doctorId: ID
+  procedureId: ID
+  opme: Boolean
+  cost: Cost
+  providerId: ID
+  reason: Reason
+  accommodation: Accommodation
+  note: String
+  status: Status
+  internmentId: ID
+  created_at: Date
+  updated_at: Date
+}
+
+# Type
 type Patient {
   id: ID!
   name: String!
@@ -18,5 +80,18 @@ type Query {
 
 # Mutation
 type Mutation {
-  createPatient(name: String!, dateBirth: Date!, operatorId: ID!): Patient!
+  createPatient(
+    name: String!
+    dateBirth: Date!
+    operatorId: ID!
+    authorizations: AuthorizationInputCreate
+  ): Patient!
+
+  updatePatient(
+    id: ID!
+    name: String
+    dateBirth: Date
+    operatorId: ID
+    authorizations: AuthorizationInputUpdate
+  ): Patient
 }

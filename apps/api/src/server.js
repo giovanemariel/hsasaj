@@ -1,13 +1,14 @@
 const { GraphQLServer } = require('graphql-yoga')
+const { PrismaClient } = require('@prisma/client')
 const {
+  addResolversToSchema,
   loadSchemaSync,
   GraphQLFileLoader,
-  addResolversToSchema,
 } = require('graphql-tools')
-const { PrismaClient } = require('@prisma/client')
-const resolvers = require('./graphql/resolvers')
 
 const prisma = new PrismaClient()
+
+const resolvers = require('./graphql/resolvers')
 
 const schema = loadSchemaSync('./**/*.graphql', {
   loaders: [new GraphQLFileLoader()],

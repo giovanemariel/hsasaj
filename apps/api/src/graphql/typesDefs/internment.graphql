@@ -1,0 +1,19 @@
+# import Authorization from "./authorization.graphql"
+
+scalar Date
+
+enum Reason {
+  HOSPITAL
+  MEDICO
+  OPERADORA
+  PACIENTE
+}
+
+type Internment {
+  id: ID!
+  dateExecution: Date!
+  dateOutput: Date!
+  guideNumber: String!
+  reason: Reason
+  authorizations: [Authorization]
+}

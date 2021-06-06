@@ -5,7 +5,7 @@ type Doctor {
   id: ID!
   name: String!
   council: String!
-  specialty: Specialty!
+  specialties: [Specialty!]!
   cpf: String!
 }
 
@@ -19,7 +19,7 @@ type Mutation {
   createDoctor(
     name: String!
     council: String!
-    specialtyId: ID!
+    specialties: ID!
     cpf: String!
   ): Doctor!
 }
