@@ -1,7 +1,7 @@
 module.exports = {
   Mutation: {
-    createSpecialty(_, args, ctx) {
-      return ctx.db.specialty.create({
+    async createSpecialty(_, args, ctx) {
+      return await ctx.db.specialty.create({
         data: {
           ...args,
         },

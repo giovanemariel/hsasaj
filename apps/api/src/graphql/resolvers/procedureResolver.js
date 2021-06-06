@@ -1,7 +1,7 @@
 module.exports = {
   Mutation: {
-    createProcedure(_, args, ctx) {
-      return ctx.db.procedure.create({
+    async createProcedure(_, args, ctx) {
+      return await ctx.db.procedure.create({
         data: {
           ...args,
         },

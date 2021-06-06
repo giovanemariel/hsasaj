@@ -1,7 +1,7 @@
 module.exports = {
   Mutation: {
-    createDoctor(_, args, ctx) {
-      return ctx.db.doctor.create({
+    async createDoctor(_, args, ctx) {
+      return await ctx.db.doctor.create({
         data: {
           ...args,
           specialties: {

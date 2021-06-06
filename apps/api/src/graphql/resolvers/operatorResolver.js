@@ -1,7 +1,7 @@
 module.exports = {
   Mutation: {
-    createOperator(_, args, ctx) {
-      return ctx.db.operator.create({
+    async createOperator(_, args, ctx) {
+      return await ctx.db.operator.create({
         data: {
           ...args,
         },

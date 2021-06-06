@@ -126,19 +126,19 @@ model Authorization {
   accommodation     Accommodation
   note              String?
   status            Status?       @default(AGUARDANDO)
-  internment        Internment?   @relation(fields: [internmentId], references: [id])
-  internmentId      String?
+  internment        Internment?
   created_at        DateTime      @default(now())
   updated_at        DateTime      @updatedAt
 }
 
 model Internment {
-  id            String         @id @default(cuid())
-  dateExecution DateTime       @db.Date
-  dateOutput    DateTime       @db.Date
-  guideNumber   String         @unique
-  reason        Reason?
-  authorization Authorization?
-  created_at    DateTime       @default(now())
-  updated_at    DateTime       @updatedAt
+  id              String         @id @default(cuid())
+  dateExecution   DateTime       @db.Date
+  dateOutput      DateTime       @db.Date
+  guideNumber     String         @unique
+  reason          Reason?
+  authorization   Authorization? @relation(fields: [authorizationId], references: [id])
+  authorizationId String?
+  created_at      DateTime       @default(now())
+  updated_at      DateTime       @updatedAt
 }

@@ -41,9 +41,15 @@ input AuthorizationInputCreate {
   accommodation: Accommodation!
   note: String
   status: Status
-  internmentId: ID
   created_at: Date
   updated_at: Date
+}
+
+input InternmentInput {
+  dateExecution: Date!
+  dateOutput: Date!
+  guideNumber: String!
+  reason: Reason
 }
 
 input AuthorizationInputUpdate {
@@ -59,7 +65,7 @@ input AuthorizationInputUpdate {
   accommodation: Accommodation
   note: String
   status: Status
-  internmentId: ID
+  internment: InternmentInput
   created_at: Date
   updated_at: Date
 }

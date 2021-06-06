@@ -1,7 +1,7 @@
 module.exports = {
   Mutation: {
-    createPatient(_, args, ctx) {
-      return ctx.db.patient.create({
+    async createPatient(_, args, ctx) {
+      return await ctx.db.patient.create({
         data: {
           ...args,
           authorizations: args.authorizations
@@ -13,8 +13,8 @@ module.exports = {
       })
     },
 
-    updatePatient(_, args, ctx) {
-      return ctx.db.patient.update({
+    async updatePatient(_, args, ctx) {
+      return await ctx.db.patient.update({
         where: { id: args.id },
         data: {
           ...args,
@@ -22,8 +22,21 @@ module.exports = {
             ? {
                 upsert: {
                   where: { id: args.authorizations.id || '' },
-                  create: { ...args.authorizations },
-                  update: { ...args.authorizations },
+                  create: {
+                    ...args.authorizations,
+                    internment: undefined,
+                  },
+                  update: {
+                    ...args.authorizations,
+                    internment: args.authorizations.internment
+                      ? {
+                          upsert: {
+                            create: { ...args.authorizations.internment },
+                            update: { ...args.authorizations.internment },
+                          },
+                        }
+                      : undefined,
+                  },
                 },
               }
             : undefined,
