@@ -8,4 +8,10 @@ module.exports = {
       })
     },
   },
+
+  Query: {
+    async providers(_, args, ctx) {
+      return await ctx.db.provider.findMany()
+    },
+  },
 }

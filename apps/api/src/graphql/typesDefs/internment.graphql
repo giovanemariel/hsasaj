@@ -2,6 +2,7 @@
 
 scalar Date
 
+# Enum
 enum Reason {
   HOSPITAL
   MEDICO
@@ -9,6 +10,7 @@ enum Reason {
   PACIENTE
 }
 
+# Type
 type Internment {
   id: ID!
   dateExecution: Date!
@@ -16,4 +18,9 @@ type Internment {
   guideNumber: String!
   reason: Reason
   authorizations: [Authorization]
+}
+
+# Query
+type Query {
+  internments: [Internment!]!
 }

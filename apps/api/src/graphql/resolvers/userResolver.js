@@ -50,7 +50,7 @@ module.exports = {
   },
 
   Query: {
-    async user(_, args, ctx) {
+    async users(_, args, ctx) {
       return await ctx.db.user.findMany()
     },
   },

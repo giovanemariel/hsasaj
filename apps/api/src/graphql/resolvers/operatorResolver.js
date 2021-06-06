@@ -8,4 +8,10 @@ module.exports = {
       })
     },
   },
+
+  Query: {
+    async operators(_, args, ctx) {
+      return await ctx.db.operator.findMany()
+    },
+  },
 }

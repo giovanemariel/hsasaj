@@ -8,7 +8,7 @@ type Operator {
 
 # Query
 type Query {
-  operator: [Operator!]!
+  operators: [Operator!]!
 }
 
 # Mutation

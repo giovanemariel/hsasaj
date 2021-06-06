@@ -8,4 +8,10 @@ module.exports = {
       })
     },
   },
+
+  Query: {
+    async procedures(_, args, ctx) {
+      return await ctx.db.procedure.findMany()
+    },
+  },
 }

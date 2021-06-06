@@ -13,6 +13,14 @@ module.exports = {
       })
     },
 
+    async deletePatient(_, args, ctx) {
+      return await ctx.db.patient.delete({
+        where: {
+          id: args.id,
+        },
+      })
+    },
+
     async updatePatient(_, args, ctx) {
       return await ctx.db.patient.update({
         where: { id: args.id },

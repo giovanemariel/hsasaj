@@ -22,4 +22,6 @@ type Mutation {
     specialties: ID!
     cpf: String!
   ): Doctor!
+
+  deleteDoctor(id: ID!): Doctor!
 }

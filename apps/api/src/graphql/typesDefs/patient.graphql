@@ -99,5 +99,7 @@ type Mutation {
     dateBirth: Date
     operatorId: ID
     authorizations: AuthorizationInputUpdate
-  ): Patient
+  ): Patient!
+
+  deletePatient(id: ID!): Patient!
 }

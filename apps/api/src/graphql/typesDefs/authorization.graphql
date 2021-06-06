@@ -55,3 +55,8 @@ type Authorization {
 type Query {
   authorizations: [Authorization!]!
 }
+
+# Mutation
+type Mutation {
+  deleteAuthorization(id: ID!): Authorization
+}
