@@ -5,6 +5,7 @@ const {
   loadSchemaSync,
   GraphQLFileLoader,
 } = require('graphql-tools')
+const importMiddlewares = require('./middlewares')
 
 const prisma = new PrismaClient()
 
@@ -25,6 +26,7 @@ const server = new GraphQLServer({
     ...request,
     db: prisma,
   }),
+  middlewares: [...importMiddlewares],
 })
 
 module.exports = server

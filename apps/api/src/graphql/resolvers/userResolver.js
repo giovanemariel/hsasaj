@@ -1,5 +1,6 @@
 const { compare, hash } = require('bcryptjs')
 const { issueToken } = require('../../util/util')
+const { CustomError } = require('../../errors/')
 
 module.exports = {
   Mutation: {
@@ -11,13 +12,19 @@ module.exports = {
       })
 
       if (!user) {
-        throw new Error('Usuário ou senha incorreto!')
+        throw new CustomError(
+          'User or password Incorrect',
+          'INCORRECT_LOGIN_ERROR',
+        )
       }
 
       const isValid = await compare(password, user.password)
 
       if (!isValid) {
-        throw new Error('Usuário ou senha incorreto!')
+        throw new CustomError(
+          'User or password Incorrect',
+          'INCORRECT_LOGIN_ERROR',
+        )
       }
 
       const { id: sub, role } = user
