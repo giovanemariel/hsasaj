@@ -1,3 +1,5 @@
+directive @auth(requires: Role = USER) on FIELD_DEFINITION
+
 # Enum
 enum Department {
   ADMINISTRATIVO
@@ -33,7 +35,7 @@ type User {
 
 # Query
 type Query {
-  users: [User!]!
+  users: [User!]! @auth(requires: ADMIN)
 }
 
 # Mutation

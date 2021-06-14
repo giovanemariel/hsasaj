@@ -1,6 +1,3 @@
-# import Operator from "./operator.graphql"
-# import Authorization from "./authorization.graphql"
-
 scalar Date
 
 # Enum

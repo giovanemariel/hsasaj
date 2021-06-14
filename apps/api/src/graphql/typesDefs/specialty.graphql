@@ -1,5 +1,3 @@
-# import Doctor from "./doctor.graphql"
-
 type Specialty {
   id: ID!
   name: String!

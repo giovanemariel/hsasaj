@@ -1,32 +1,23 @@
 const { GraphQLServer } = require('graphql-yoga')
 const { PrismaClient } = require('@prisma/client')
-const {
-  addResolversToSchema,
-  loadSchemaSync,
-  GraphQLFileLoader,
-} = require('graphql-tools')
-const importMiddlewares = require('./middlewares')
+const { loadFilesSync, mergeTypeDefs } = require('graphql-tools')
+const path = require('path')
 
 const prisma = new PrismaClient()
 
+const { AuthDirective } = require('./directives/AuthDirective')
+const importMiddlewares = require('./middlewares')
+
+const loadSchema = loadFilesSync(path.join(__dirname, './**/*.graphql'))
+const typeDefs = mergeTypeDefs(loadSchema)
 const resolvers = require('./graphql/resolvers')
 
-const schema = loadSchemaSync('./**/*.graphql', {
-  loaders: [new GraphQLFileLoader()],
-})
-
-const schemaWithResolvers = addResolversToSchema({
-  schema,
-  resolvers,
-})
-
 const server = new GraphQLServer({
-  schema: schemaWithResolvers,
-  context: (request) => ({
-    ...request,
-    db: prisma,
-  }),
+  typeDefs,
+  resolvers,
+  context: (request) => ({ ...request, db: prisma }),
   middlewares: [...importMiddlewares],
+  schemaDirectives: { auth: AuthDirective },
 })
 
 module.exports = server
