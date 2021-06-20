@@ -7,6 +7,7 @@ const prisma = new PrismaClient()
 
 const { AuthDirective } = require('./directives/AuthDirective')
 const importMiddlewares = require('./middlewares')
+const { selectFields } = require('./util')
 
 const loadSchema = loadFilesSync(path.join(__dirname, './**/*.graphql'))
 const typeDefs = mergeTypeDefs(loadSchema)
@@ -15,7 +16,7 @@ const resolvers = require('./graphql/resolvers')
 const server = new GraphQLServer({
   typeDefs,
   resolvers,
-  context: (request) => ({ ...request, db: prisma }),
+  context: (request) => ({ ...request, db: prisma, selectFields }),
   middlewares: [...importMiddlewares],
   schemaDirectives: { auth: AuthDirective },
 })

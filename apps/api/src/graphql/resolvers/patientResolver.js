@@ -54,19 +54,17 @@ module.exports = {
   },
 
   Query: {
-    async patients(_, args, ctx) {
-      return await ctx.db.patient.findMany({
-        include: {
-          operator: true,
-          authorizations: {
-            include: {
-              doctor: true,
-              procedure: true,
-              provider: true,
-              internment: true,
-            },
-          },
+    async patients(_, args, { db, selectFields }, info) {
+      return await db.patient.findMany({
+        ...selectFields(info),
+      })
+    },
+    async patient(_, args, { db, selectFields }, info) {
+      return await db.patient.findUnique({
+        where: {
+          id: args.id,
         },
+        ...selectFields(info),
       })
     },
   },

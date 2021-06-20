@@ -60,5 +60,12 @@ module.exports = {
     async users(_, args, ctx) {
       return await ctx.db.user.findMany()
     },
+    async user(user, args, ctx) {
+      return await ctx.db.user.findUnique({
+        where: {
+          id: args.id,
+        },
+      })
+    },
   },
 }

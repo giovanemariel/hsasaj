@@ -36,6 +36,7 @@ type User {
 # Query
 type Query {
   users: [User!]! @auth(requires: ADMIN)
+  user(id: ID!): User!
 }
 
 # Mutation

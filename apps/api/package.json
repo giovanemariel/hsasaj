@@ -18,6 +18,7 @@
     "prisma": "^2.24.1"
   },
   "dependencies": {
+    "@paljs/plugins": "^3.3.3",
     "@prisma/client": "^2.24.1",
     "bcryptjs": "^2.4.3",
     "graphql-tools": "^7.0.5",

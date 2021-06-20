@@ -79,6 +79,7 @@ type Patient {
 # Query
 type Query {
   patients: [Patient!]!
+  patient(id: ID!): Patient!
 }
 
 # Mutation
